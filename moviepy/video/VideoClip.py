@@ -102,7 +102,7 @@ class VideoClip(Clip):
         self.mask = None
         self.audio = None
         self.pos = lambda t: (0, 0)
-        self.pivot = (0.5, 0.5)
+        self.pivot = (0.0, 0.0)
         self.relative_pos = False
         self.layer = 0
         if make_frame:

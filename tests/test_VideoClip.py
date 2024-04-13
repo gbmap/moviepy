@@ -14,8 +14,14 @@ from moviepy.tools import convert_to_seconds
 from moviepy.video.compositing.CompositeVideoClip import CompositeVideoClip
 from moviepy.video.fx.mask_color import mask_color
 from moviepy.video.fx.multiply_speed import multiply_speed
+from moviepy.video.io.ImageSequenceClip import ImageSequenceClip
 from moviepy.video.io.VideoFileClip import VideoFileClip
 from moviepy.video.VideoClip import BitmapClip, ColorClip, ImageClip, VideoClip
+
+
+
+def _arr2img(arr: np.ndarray) -> np.ndarray:
+    return arr.astype(np.uint8)
 
 
 def test_aspect_ratio():
@@ -509,6 +515,26 @@ def test_matmul(util):
     target = BitmapClip([["R", "G"]], fps=1)
     result = clip1 @ 270
     assert result == target
+
+def test_pivot():
+    _lerp = lambda t: 0.0*(1.0-t/2.0)+0.5*t/2.0
+    _p = lambda t: (_lerp(t), _lerp(t))
+    bg = ImageSequenceClip([_arr2img(np.zeros((256,256,3))*255)], durations=[2.0])
+    sqr1 = ImageSequenceClip([_arr2img(np.random.normal(1.0,1.0, size=(128,128,3))*255)], durations=[2.0]).with_pivot((0.0, 0.0)).with_position(_p, relative=True)
+    assert sqr1.pivot == (0.0, 0.0)
+
+    sqr2 = ImageSequenceClip([_arr2img(np.random.normal(1.0,1.0, size=(128,128,3))*255)], durations=[2.0]).with_pivot((0.5, 0.5)).with_position(_p, relative=True)
+    assert sqr2.pivot == (0.5, 0.5)
+
+    sqr3 = ImageSequenceClip([_arr2img(np.random.normal(1.0,1.0, size=(128,128,3))*255)], durations=[2.0]).with_pivot((1.0, 1.0)).with_position(_p, relative=True)
+    assert sqr3.pivot == (1.0, 1.0)
+
+    CompositeVideoClip([bg, sqr1, sqr2, sqr3]).with_duration(bg.duration).write_videofile('tmp/test_pivot.mp4', fps=24)
+
+
+
+
+
 
 
 if __name__ == "__main__":

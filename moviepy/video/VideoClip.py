@@ -9,10 +9,11 @@ import os
 import subprocess as sp
 import tempfile
 from numbers import Real
+from typing import Tuple
 
 import numpy as np
 import proglog
-from imageio import imread, imsave
+from imageio.v2 import imread, imsave
 from PIL import Image
 
 from moviepy.Clip import Clip
@@ -101,6 +102,7 @@ class VideoClip(Clip):
         self.mask = None
         self.audio = None
         self.pos = lambda t: (0, 0)
+        self.pivot = (0.5, 0.5)
         self.relative_pos = False
         self.layer = 0
         if make_frame:
@@ -698,7 +700,9 @@ class VideoClip(Clip):
             D = {"top": 0, "center": (hf - hi) / 2, "bottom": hf - hi}
             pos[1] = D[pos[1]]
 
-        pos = map(int, pos)
+        pos = tuple(map(int, pos))
+
+        pos = (pos[0] - int(self.pivot[0]*self.w), pos[1] - int(self.pivot[1]*self.h))
         return blit(im_img, picture, pos, mask=im_mask)
 
     def add_mask(self):
@@ -845,6 +849,14 @@ class VideoClip(Clip):
             self.pos = pos
         else:
             self.pos = lambda t: pos
+
+    # @apply_to_mask
+    # @outplace
+    def with_pivot(self, pivot: Tuple[float, float]) -> 'VideoClip':
+        """pivot is always relative"""
+        self.pivot = pivot
+        return self
+
 
     @apply_to_mask
     @outplace

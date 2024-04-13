@@ -38,6 +38,8 @@ else:
 from moviepy.video.VideoClip import BitmapClip, ColorClip, ImageClip, VideoClip
 
 
+from tests import requires_imagemagick
+
 try:
     importlib.import_module("ipython.display")
 except ImportError:
@@ -47,6 +49,7 @@ else:
     del sys.modules["ipython.display"]
 
 
+@requires_imagemagick
 def test_credits(util):
     credit_file = (
         "# This is a comment\n"

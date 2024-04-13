@@ -9,6 +9,8 @@ from moviepy.video.compositing.concatenate import concatenate_videoclips
 from moviepy.video.tools.subtitles import SubtitlesClip, file_to_subtitles
 from moviepy.video.VideoClip import ColorClip, TextClip
 
+from tests import requires_imagemagick
+
 
 MEDIA_SUBTITLES_DATA = [
     ([0.0, 1.0], "Red!"),
@@ -23,6 +25,7 @@ MEDIA_SUBTITLES_UNICODE_DATA = [
 ]
 
 
+@requires_imagemagick
 def test_subtitles(util):
     red = ColorClip((800, 600), color=(255, 0, 0)).with_duration(10)
     green = ColorClip((800, 600), color=(0, 255, 0)).with_duration(10)

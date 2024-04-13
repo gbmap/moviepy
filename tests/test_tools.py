@@ -96,6 +96,7 @@ def test_deprecated_version_of(old_name):
     assert record[0].message.args[0] == expected_warning_message
 
 
+@pytest.mark.skip("downloading webfiles is a dumb feature")
 @pytest.mark.parametrize(
     ("url", "expected_result"),
     (

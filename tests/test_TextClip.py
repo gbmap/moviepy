@@ -9,7 +9,10 @@ import pytest
 from moviepy.video.fx.blink import blink
 from moviepy.video.VideoClip import TextClip
 
+from tests import requires_imagemagick
 
+
+@requires_imagemagick
 def test_list():
     fonts = TextClip.list("font")
     assert isinstance(fonts, list)
@@ -20,14 +23,14 @@ def test_list():
     assert isinstance(colors[0], str)
     assert "blue" in colors
 
-
+@requires_imagemagick
 def test_search():
     blues = TextClip.search("blue", "color")
     assert isinstance(blues, list)
     assert isinstance(blues[0], str)
     assert "blue" in blues
 
-
+@requires_imagemagick
 def test_duration(util):
     clip = TextClip("hello world", size=(1280, 720), color="white", font=util.FONT)
     clip = clip.with_duration(5)
@@ -38,7 +41,7 @@ def test_duration(util):
     clip2 = clip2.with_duration(5)
     assert clip2.duration == 5
 
-
+@requires_imagemagick
 def test_text_filename_arguments_consistence(util):
     """Passing ``text`` or ``filename`` we obtain the same result."""
     clip_from_text = (
@@ -76,7 +79,7 @@ def test_text_filename_arguments_consistence(util):
     assert len(frames_from_file) == 1
     assert np.equal(frames_from_text[0], frames_from_file[0]).all()
 
-
+@requires_imagemagick
 @pytest.mark.parametrize(
     "method", ("caption", "label"), ids=("method=caption", "method=label")
 )

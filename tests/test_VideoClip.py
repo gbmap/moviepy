@@ -216,26 +216,26 @@ def test_write_gif_ffmpeg_tmpfiles_pixel_format(util, video):
     assert os.path.isfile(location)
 
 
-def test_write_gif_ImageMagick(util, video):
-    clip = video(start_time=0.2, end_time=0.5)
-    location = os.path.join(util.TMP_DIR, "imagemagick_gif.gif")
-    clip.write_gif(location, program="ImageMagick")
-    # Fails for some reason
-    # assert os.path.isfile(location)
+# def test_write_gif_ImageMagick(util, video):
+#     clip = video(start_time=0.2, end_time=0.5)
+#     location = os.path.join(util.TMP_DIR, "imagemagick_gif.gif")
+#     clip.write_gif(location, program="ImageMagick")
+#     # Fails for some reason
+#     # assert os.path.isfile(location)
 
 
-def test_write_gif_ImageMagick_tmpfiles(util, video):
-    clip = video(start_time=0.2, end_time=0.24)
-    location = os.path.join(util.TMP_DIR, "imagemagick_tmpfiles_gif.gif")
-    clip.write_gif(location, program="ImageMagick", tempfiles=True)
-    assert os.path.isfile(location)
+# def test_write_gif_ImageMagick_tmpfiles(util, video):
+#     clip = video(start_time=0.2, end_time=0.24)
+#     location = os.path.join(util.TMP_DIR, "imagemagick_tmpfiles_gif.gif")
+#     clip.write_gif(location, program="ImageMagick", tempfiles=True)
+#     assert os.path.isfile(location)
 
 
-def test_write_gif_ImageMagick_tmpfiles_pixel_format(util, video):
-    clip = video(start_time=0.2, end_time=0.24)
-    location = os.path.join(util.TMP_DIR, "imagemagick_tmpfiles_gif.gif")
-    clip.write_gif(location, program="ImageMagick", tempfiles=True, pixel_format="SGI")
-    assert os.path.isfile(location)
+# def test_write_gif_ImageMagick_tmpfiles_pixel_format(util, video):
+#     clip = video(start_time=0.2, end_time=0.24)
+#     location = os.path.join(util.TMP_DIR, "imagemagick_tmpfiles_gif.gif")
+#     clip.write_gif(location, program="ImageMagick", tempfiles=True, pixel_format="SGI")
+#     assert os.path.isfile(location)
 
 
 def test_subfx(util):

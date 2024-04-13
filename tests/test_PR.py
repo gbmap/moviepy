@@ -12,8 +12,12 @@ from moviepy.video.io.VideoFileClip import VideoFileClip
 from moviepy.video.tools.interpolators import Trajectory
 from moviepy.video.tools.subtitles import SubtitlesClip
 from moviepy.video.VideoClip import ColorClip, ImageClip, TextClip
+from moviepy import config
+
+from tests import requires_imagemagick
 
 
+@requires_imagemagick
 def test_PR_306():
     assert TextClip.list("font") != []
     assert TextClip.list("color") != []
@@ -22,6 +26,7 @@ def test_PR_306():
         TextClip.list("blah")
 
 
+@requires_imagemagick
 def test_PR_339(util):
     # In caption mode.
     TextClip(
@@ -114,6 +119,7 @@ def test_PR_1137_image():
     ImageClip(Path("media/vacation_2017.jpg")).close()
 
 
+@requires_imagemagick
 def test_PR_1137_subtitles(util):
     """Test support for path-like objects as arguments for SubtitlesClip."""
 
